@@ -18,9 +18,7 @@ Discordrb::LOGGER.info "invite url: #{bot.invite_url()}"
 
 def sanitize_character(text)
   character = text.slice(1..text.size - 2).downcase
-  puts "looking for #{character}"
   character = ALIASES[character] || character
-  puts "aliased: #{character}"
   CHARACTERS.find do |listed_character|
     listed_character.downcase == character.downcase
   end
