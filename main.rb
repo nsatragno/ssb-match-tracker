@@ -2,16 +2,19 @@
 
 require 'discordrb'
 require 'dotenv'
-require './characters.rb'
+
+require './lib/characters.rb'
+require './lib/database.rb'
 
 REGISTER_COMMAND = '!register '
 
 Dotenv.load
 
-# Discordrb::LOGGER = Discordrb::LOGGER.initialize(fancy: true)
 bot = Discordrb::Bot.new token: ENV['BOT_TOKEN']
 Discordrb::LOGGER.mode = :normal
 Discordrb::LOGGER.fancy = true
+
+db = Database.new
 
 Discordrb::LOGGER.info "ssb-match-tracker loaded!"
 Discordrb::LOGGER.info "invite url: #{bot.invite_url()}"
