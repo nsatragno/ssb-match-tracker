@@ -6,7 +6,8 @@ require 'dotenv'
 require './lib/characters.rb'
 require './lib/database.rb'
 
-REGISTER_COMMAND = '!register '
+REGISTER_COMMAND = '!register'
+NEW_SEASON_COMMAND = '!new_season'
 
 Dotenv.load
 
@@ -28,8 +29,12 @@ def sanitize_character(text)
   end
 end
 
+def get_arguments(event, command_name)
+  event.message.content.slice(command_name.size + 1, event.message.content.size) or ""
+end
+
 bot.message(start_with: REGISTER_COMMAND) do |event|
-  command = event.message.content.slice(REGISTER_COMMAND.size, event.message.content.size)
+  command = get_arguments(event, REGISTER_COMMAND)
   unless command.match? /<@.+> +\(.+?\) +\d-\d +<@.+> +\(.+?\)/ and event.message.mentions.size == 2
     event.respond 'Bad message format, try something like `!register @Kairos (Lucas) 0-3 @eriNa_ (Rosalina & Luma)`'
     next
@@ -51,6 +56,15 @@ bot.message(start_with: REGISTER_COMMAND) do |event|
   end
 
   event.respond "Match registered: #{left_user.username} (#{left_character}) vs #{right_user.username} (#{right_character})"
+end
+
+bot.message(start_with: NEW_SEASON_COMMAND) do |event|
+  name = get_arguments(event, NEW_SEASON_COMMAND).strip
+  if name.empty?
+    event.respond "The `#{NEW_SEASON_COMMAND}` command requires a name, try `!new_season Amazing Season`"
+    next
+  end
+  event.respond "Season #{name} created!"
 end
 
 bot.run
