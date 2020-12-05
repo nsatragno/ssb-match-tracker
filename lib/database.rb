@@ -8,8 +8,8 @@ class Database
 
   def self.load
     config = db_config
-    puts "Database environment: #{ENV['ENVIRONMENT']}"
-    puts "Loading database with config: #{config}"
+    Discordrb::LOGGER.info "Database environment: #{ENV['ENVIRONMENT']}"
+    Discordrb::LOGGER.info "Loading database with config: #{config}"
     ActiveRecord::Base.establish_connection(config)
   end
 

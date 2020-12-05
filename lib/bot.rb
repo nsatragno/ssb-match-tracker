@@ -11,8 +11,9 @@ REGISTER_COMMAND = '!register '
 Dotenv.load
 
 bot = Discordrb::Bot.new token: ENV['BOT_TOKEN']
-Discordrb::LOGGER.mode = :normal
-Discordrb::LOGGER.fancy = true
+
+# Need to reload the logger after creating a bot.
+Logging.load
 
 db = Database.new
 
