@@ -1,3 +1,3 @@
-class Season < ActiveRecord::Base
-  belongs_to :match
+class Match < ActiveRecord::Base
+  belongs_to :season
 end
